@@ -20,7 +20,7 @@ public class InvestmentRepository : IInvestmentRepository
     {
         try
         {
-            string connectionString = _configuration["stringconnection"];
+            string connectionString = _configuration.GetConnectionString("mainServer");
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -39,7 +39,7 @@ public class InvestmentRepository : IInvestmentRepository
     {
         try
         {
-            string? connectionString = _configuration["stringconnection"];
+            string? connectionString = _configuration.GetConnectionString("mainServer");
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -59,7 +59,7 @@ public class InvestmentRepository : IInvestmentRepository
     {
         try
         {
-            string? connectionString = _configuration["stringconnection"];
+            string? connectionString = _configuration.GetConnectionString("mainServer");
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -79,7 +79,7 @@ public class InvestmentRepository : IInvestmentRepository
     {
         try
         {
-            string? connectionString = _configuration["stringconnection"];
+            string? connectionString = _configuration.GetConnectionString("mainServer");
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -98,7 +98,7 @@ public class InvestmentRepository : IInvestmentRepository
     {
         try
         {
-            string? connectionString = _configuration["stringconnection"];
+            string? connectionString = _configuration.GetConnectionString("mainServer");
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {

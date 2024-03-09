@@ -20,7 +20,7 @@ public class PortfolioRepository : IPortfolioRepository
     {
         try
         {
-            string connectionString = _configuration["stringconnection"];
+            string connectionString = _configuration.GetConnectionString("mainServer");
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -40,7 +40,7 @@ public class PortfolioRepository : IPortfolioRepository
     {
         try
         {
-            string? connectionString = _configuration["stringconnection"];
+            string? connectionString = _configuration.GetConnectionString("mainServer");
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -60,7 +60,7 @@ public class PortfolioRepository : IPortfolioRepository
     {
         try
         {
-            string? connectionString = _configuration["stringconnection"];
+            string? connectionString = _configuration.GetConnectionString("mainServer");
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -81,7 +81,7 @@ public class PortfolioRepository : IPortfolioRepository
     {
         try
         {
-            string? connectionString = _configuration["stringconnection"];
+            string? connectionString = _configuration.GetConnectionString("mainServer");
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -100,7 +100,7 @@ public class PortfolioRepository : IPortfolioRepository
     {
         try
         {
-            string? connectionString = _configuration["stringconnection"];
+            string? connectionString = _configuration.GetConnectionString("mainServer");
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
