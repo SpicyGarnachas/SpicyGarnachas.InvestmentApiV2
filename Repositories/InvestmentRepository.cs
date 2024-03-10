@@ -73,13 +73,13 @@ public class InvestmentRepository : IInvestmentRepository
         }
     }
 
-    public async Task<(bool IsSuccess, string Message)> ModifyInvestment(int id, string sqlQuery)
+    public async Task<(bool IsSuccess, string Message)> ModifyInvestment(InvestmentModel investment, string sqlQuery)
     {
         try
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                await connection.ExecuteAsync(sqlQuery);
+                await connection.ExecuteAsync(sqlQuery, new { id = investment.id, portfolioId = investment.portfolioId, name = investment.name, clasification = investment.clasification, description = investment.description, platform = investment.platform, type = investment.type, sector = investment.sector, risk = investment.risk, liquidity = investment.liquidity, currencyCode = investment.currencyCode });
 
                 return (true, "Investment modified successfully");
             }

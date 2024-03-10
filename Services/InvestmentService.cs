@@ -67,40 +67,41 @@ public class InvestmentService : IInvestmentService
 
             if (investment.name != null || investment.name != string.Empty)
             {
-                updateFields.Add($"name = '{investment.name}'");
+                updateFields.Add($"name = @name");
             }
 
             if (investment.clasification != null || investment.clasification != string.Empty)
             {
-                updateFields.Add($"clasification = '{investment.clasification}'");
+                updateFields.Add($"clasification = @clasification");
             }
 
             if (investment.description != null || investment.description != string.Empty)
             {
-                updateFields.Add($"description = '{investment.description}'");
+                updateFields.Add($"description = @description");
             }
 
             if (investment.platform != null || investment.platform != string.Empty)
             {
-                updateFields.Add($"platform = '{investment.platform}'");
+                updateFields.Add($"platform = @platform");
             }
 
             if (investment.type != null || investment.type != string.Empty)
             {
-                updateFields.Add($"type = '{investment.type}'");
+                updateFields.Add($"type = @type");
             }
 
             if (investment.sector != null || investment.sector != string.Empty)
             {
-                updateFields.Add($"sector = '{investment.sector}'");
-            }
-            if(investment.currencyCode != null || investment.currencyCode != string.Empty)
-            {
-                updateFields.Add($"currencyCode = '{investment.currencyCode}'");
+                updateFields.Add($"sector = @sector");
             }
 
-            updateFields.Add($"risk = {investment.risk}");
-            updateFields.Add($"liquidity = {investment.liquidity}");
+            if(investment.currencyCode != null || investment.currencyCode != string.Empty)
+            {
+                updateFields.Add($"currencyCode = @currencyCode");
+            }
+
+            updateFields.Add($"risk = @risk");
+            updateFields.Add($"liquidity = @liquidity");
             updateFields.Add($"updatedOn = NOW()");
 
             foreach (string field in updateFields)
@@ -116,9 +117,10 @@ public class InvestmentService : IInvestmentService
                 }
             }
 
-            sqlQuery += $" WHERE id = {investment.id} AND portfolioId = {investment.portfolioId}";
+            sqlQuery += $" WHERE id = @id AND portfolioId = @portfolioId";
 
-            var (IsSuccess, Message) = await repository.ModifyInvestment(investment.id, sqlQuery);
+            var (IsSuccess, Message) = await repository.ModifyInvestment(investment, sqlQuery);
+
             return IsSuccess.Equals(true) ? (true, Message) : (false, Message);
         }
         catch (Exception ex)
