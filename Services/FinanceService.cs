@@ -29,11 +29,11 @@ public class FinanceService : IFinanceService
         }
     }
 
-    public async Task<(bool IsSuccess, IEnumerable<FinanceModel>?, string Message)> GetFinanceDataByPortfolioId(int id)
+    public async Task<(bool IsSuccess, IEnumerable<FinanceModel>?, string Message)> GetFinanceDataByUserId(int id)
     {
         try
         {
-            var (IsSuccess, Result, Message) = await repository.GetFinanceDataByPortfolioId(id);
+            var (IsSuccess, Result, Message) = await repository.GetFinanceDataByUserId(id);
             return IsSuccess ? (true, Result, string.Empty) : (false, null, Message);
         }
         catch (Exception ex)
