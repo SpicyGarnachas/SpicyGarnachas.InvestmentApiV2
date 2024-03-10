@@ -1,10 +1,10 @@
 ﻿using MySql.Data.MySqlClient;
-using SpicyGarnachas.InvestmentApiV2.Models;
-using SpicyGarnachas.InvestmentApiV2.Repositories.Interfaces;
-using SpicyGarnachas.InvestmentApiV2.Services.Interfaces;
+using SpicyGarnachas.FinanceApiV2.Models;
+using SpicyGarnachas.FinanceApiV2.Repositories.Interfaces;
+using SpicyGarnachas.FinanceApiV2.Services.Interfaces;
 using System.Security.Policy;
 
-namespace SpicyGarnachas.InvestmentApiV2;
+namespace SpicyGarnachas.FinanceApiV2;
 
 public class UserService : IUserService
 {

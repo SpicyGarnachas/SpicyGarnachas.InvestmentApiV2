@@ -1,5 +1,5 @@
-﻿using SpicyGarnachas.InvestmentApiV2.Models;
-namespace SpicyGarnachas.InvestmentApiV2.Services.Interfaces;
+﻿using SpicyGarnachas.FinanceApiV2.Models;
+namespace SpicyGarnachas.FinanceApiV2.Services.Interfaces;
 
 public interface IPortfolioService
 {

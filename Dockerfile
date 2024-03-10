@@ -9,17 +9,17 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["SpicyGarnachas.InvestmentApiV2.csproj", "."]
-RUN dotnet restore "./././SpicyGarnachas.InvestmentApiV2.csproj"
+COPY ["SpicyGarnachas.FinanceApiV2.csproj", "."]
+RUN dotnet restore "./././SpicyGarnachas.FinanceApiV2.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "./SpicyGarnachas.InvestmentApiV2.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./SpicyGarnachas.FinanceApiV2.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./SpicyGarnachas.InvestmentApiV2.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./SpicyGarnachas.FinanceApiV2.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SpicyGarnachas.InvestmentApiV2.dll"]
+ENTRYPOINT ["dotnet", "SpicyGarnachas.FinanceApiV2.dll"]

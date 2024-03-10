@@ -1,9 +1,9 @@
-﻿using SpicyGarnachas.InvestmentApiV2.Repositories.Interfaces;
+﻿using SpicyGarnachas.FinanceApiV2.Repositories.Interfaces;
 using MySql.Data.MySqlClient;
-using SpicyGarnachas.InvestmentApiV2.Models;
+using SpicyGarnachas.FinanceApiV2.Models;
 using Dapper;
 
-namespace SpicyGarnachas.InvestmentApiV2.Repositories;
+namespace SpicyGarnachas.FinanceApiV2.Repositories;
 
 public class PortfolioRepository : IPortfolioRepository
 {

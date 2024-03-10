@@ -1,8 +1,8 @@
-using SpicyGarnachas.InvestmentApiV2.Models;
+using SpicyGarnachas.FinanceApiV2.Models;
 using Microsoft.AspNetCore.Mvc;
-using SpicyGarnachas.InvestmentApiV2.Services.Interfaces;
+using SpicyGarnachas.FinanceApiV2.Services.Interfaces;
 
-namespace SpicyGarnachas.InvestmentApiV2.Controllers;
+namespace SpicyGarnachas.FinanceApiV2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

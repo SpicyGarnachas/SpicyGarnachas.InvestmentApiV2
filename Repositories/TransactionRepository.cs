@@ -1,9 +1,9 @@
 ﻿using Dapper;
 using MySql.Data.MySqlClient;
-using SpicyGarnachas.InvestmentApiV2.Models;
-using SpicyGarnachas.InvestmentApiV2.Repositories.Interfaces;
+using SpicyGarnachas.FinanceApiV2.Models;
+using SpicyGarnachas.FinanceApiV2.Repositories.Interfaces;
 
-namespace SpicyGarnachas.InvestmentApiV2.Repositories;
+namespace SpicyGarnachas.FinanceApiV2.Repositories;
 
 public class TransactionRepository : ITransactionRepository
 {

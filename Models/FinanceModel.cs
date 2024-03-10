@@ -1,6 +1,6 @@
-﻿namespace SpicyGarnachas.InvestmentApiV2.Models;
+﻿namespace SpicyGarnachas.FinanceApiV2.Models;
 
-public class InvestmentModel
+public class FinanceModel
 {
     public int id { get; set; }
     public int? portfolioId { get; set; }

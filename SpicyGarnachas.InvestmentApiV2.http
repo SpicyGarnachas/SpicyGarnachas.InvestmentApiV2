@@ -1,6 +1,6 @@
-@SpicyGarnachas.InvestmentApiV2_HostAddress = http://localhost:5126
+@SpicyGarnachas.FinanceApiV2_HostAddress = http://localhost:5126
 
-GET {{SpicyGarnachas.InvestmentApiV2_HostAddress}}/weatherforecast/
+GET {{SpicyGarnachas.FinanceApiV2_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###

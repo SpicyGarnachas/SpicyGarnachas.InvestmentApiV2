@@ -1,4 +1,4 @@
-# Investment Api V2
+# Finance Api V2
 
 The portfolio manager API facilitates finance management and connectivity with diverse sources, whether through a native application or a website.
 

@@ -1,11 +1,11 @@
 using Microsoft.OpenApi.Models;
-using SpicyGarnachas.InvestmentApiV2.Repositories.Interfaces;
-using SpicyGarnachas.InvestmentApiV2.Repositories;
-using SpicyGarnachas.InvestmentApiV2.Services.Interfaces;
-using SpicyGarnachas.InvestmentApiV2.Services;
+using SpicyGarnachas.FinanceApiV2.Repositories.Interfaces;
+using SpicyGarnachas.FinanceApiV2.Repositories;
+using SpicyGarnachas.FinanceApiV2.Services.Interfaces;
+using SpicyGarnachas.FinanceApiV2.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace SpicyGarnachas.InvestmentApiV2;
+namespace SpicyGarnachas.FinanceApiV2;
 
 public class Program
 {
@@ -25,8 +25,8 @@ public class Program
         // Add services to the container.
         builder.Services.AddScoped<IPortfolioService, PortfolioService>();
         builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
-        builder.Services.AddScoped<IInvestmentService, InvestmentService>();
-        builder.Services.AddScoped<IInvestmentRepository, InvestmentRepository>();
+        builder.Services.AddScoped<IFinanceService, FinanceService>();
+        builder.Services.AddScoped<IFinanceRepository, FinanceRepository>();
         builder.Services.AddScoped<ITransactionService, TransactionService>();
         builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
         builder.Services.AddScoped<IUserService, UserService>();

@@ -1,25 +1,25 @@
-﻿using SpicyGarnachas.InvestmentApiV2.Models;
-using SpicyGarnachas.InvestmentApiV2.Repositories.Interfaces;
-using SpicyGarnachas.InvestmentApiV2.Services.Interfaces;
+﻿using SpicyGarnachas.FinanceApiV2.Models;
+using SpicyGarnachas.FinanceApiV2.Repositories.Interfaces;
+using SpicyGarnachas.FinanceApiV2.Services.Interfaces;
 
-namespace SpicyGarnachas.InvestmentApiV2.Services;
+namespace SpicyGarnachas.FinanceApiV2.Services;
 
-public class InvestmentService : IInvestmentService
+public class FinanceService : IFinanceService
 {
-    private readonly IInvestmentRepository repository;
-    private readonly ILogger<InvestmentService> logger;
+    private readonly IFinanceRepository repository;
+    private readonly ILogger<FinanceService> logger;
 
-    public InvestmentService(IInvestmentRepository repository, ILogger<InvestmentService> logger)
+    public FinanceService(IFinanceRepository repository, ILogger<FinanceService> logger)
     {
         this.repository = repository;
         this.logger = logger;
     }
 
-    public async Task<(bool IsSuccess, IEnumerable<InvestmentModel>?, string Message)> GetInvestmentData()
+    public async Task<(bool IsSuccess, IEnumerable<FinanceModel>?, string Message)> GetFinanceData()
     {
         try
         {
-            var (IsSuccess, Result, Message) = await repository.GetInvestmentData();
+            var (IsSuccess, Result, Message) = await repository.GetFinanceData();
             return IsSuccess ? (true, Result, string.Empty) : (false, null, Message);
         }
         catch (Exception ex)
@@ -29,11 +29,11 @@ public class InvestmentService : IInvestmentService
         }
     }
 
-    public async Task<(bool IsSuccess, IEnumerable<InvestmentModel>?, string Message)> GetInvestmentDataByPortfolioId(int id)
+    public async Task<(bool IsSuccess, IEnumerable<FinanceModel>?, string Message)> GetFinanceDataByPortfolioId(int id)
     {
         try
         {
-            var (IsSuccess, Result, Message) = await repository.GetInvestmentDataByPortfolioId(id);
+            var (IsSuccess, Result, Message) = await repository.GetFinanceDataByPortfolioId(id);
             return IsSuccess ? (true, Result, string.Empty) : (false, null, Message);
         }
         catch (Exception ex)
@@ -43,11 +43,11 @@ public class InvestmentService : IInvestmentService
         }
     }
 
-    public async Task<(bool IsSuccess, string Message)> CreateNewInvestment(InvestmentModel invest)
+    public async Task<(bool IsSuccess, string Message)> CreateNewFinance(FinanceModel invest)
     {
         try
         {
-            var (IsSuccess, Message) = await repository.CreateNewInvestment(invest);
+            var (IsSuccess, Message) = await repository.CreateNewFinance(invest);
             return IsSuccess ? (true, Message) : (false, Message);
         }
         catch (Exception ex)
@@ -57,7 +57,7 @@ public class InvestmentService : IInvestmentService
         }
     }
 
-    public async Task<(bool IsSuccess, string Message)> ModifyInvestment(InvestmentModel investment)
+    public async Task<(bool IsSuccess, string Message)> ModifyFinance(FinanceModel investment)
     {
         try
         {
@@ -119,7 +119,7 @@ public class InvestmentService : IInvestmentService
 
             sqlQuery += $" WHERE id = @id AND portfolioId = @portfolioId";
 
-            var (IsSuccess, Message) = await repository.ModifyInvestment(investment, sqlQuery);
+            var (IsSuccess, Message) = await repository.ModifyFinance(investment, sqlQuery);
 
             return IsSuccess.Equals(true) ? (true, Message) : (false, Message);
         }
@@ -130,11 +130,11 @@ public class InvestmentService : IInvestmentService
         }
     }
 
-    public async Task<(bool IsSuccess, string Message)> DeleteInvestment(int id, int portfolioId)
+    public async Task<(bool IsSuccess, string Message)> DeleteFinance(int id, int portfolioId)
     {
         try
         {
-            var (IsSuccess, Message) = await repository.DeleteInvestment(id, portfolioId);
+            var (IsSuccess, Message) = await repository.DeleteFinance(id, portfolioId);
             return IsSuccess.Equals(true) ? (true, Message) : (false, Message);
         }
         catch (Exception ex)

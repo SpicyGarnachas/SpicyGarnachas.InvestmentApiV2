@@ -1,4 +1,4 @@
-﻿namespace SpicyGarnachas.InvestmentApiV2.Models;
+﻿namespace SpicyGarnachas.FinanceApiV2.Models;
 
 public class PortfolioModel
 {
