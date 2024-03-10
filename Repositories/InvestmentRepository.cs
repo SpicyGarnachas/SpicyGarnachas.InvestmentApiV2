@@ -9,23 +9,23 @@ public class InvestmentRepository : IInvestmentRepository
 {
     private readonly ILogger<InvestmentRepository> logger;
     private readonly IConfiguration _configuration;
+    private readonly string connectionString;
 
     public InvestmentRepository(ILogger<InvestmentRepository> logger, IConfiguration configuration)
     {
         this.logger = logger;
-        _configuration = configuration;
+        connectionString = configuration.GetConnectionString("mainServer");
     }
 
     public async Task<(bool IsSuccess, IEnumerable<InvestmentModel>?, string Message)> GetInvestmentData()
     {
         try
         {
-            string connectionString = _configuration.GetConnectionString("mainServer");
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 string sqlQuery = "SELECT * FROM Investment";
                 var investment = await connection.QueryAsync<InvestmentModel>(sqlQuery);
+
                 return investment.AsList().Count > 0 ? (IsSuccess: true, investment, string.Empty) : (IsSuccess: false, null, "Database without investments");
             }
         }
@@ -37,14 +37,13 @@ public class InvestmentRepository : IInvestmentRepository
     }
     public async Task<(bool IsSuccess, IEnumerable<InvestmentModel>?, string Message)> GetInvestmentDataByPortfolioId(int id)
     {
-        try
-        {
-            string? connectionString = _configuration.GetConnectionString("mainServer");
-
+        try 
+        { 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string sqlQuery = $"SELECT * FROM Investment where portfolioId = {id}";
-                var investment = await connection.QueryAsync<InvestmentModel>(sqlQuery);
+                string sqlQuery = $"SELECT * FROM Investment where portfolioId = @id";
+                var investment = await connection.QueryAsync<InvestmentModel>(sqlQuery, new { id = id });
+
                 return investment.AsList().Count > 0 ? (IsSuccess: true, investment, string.Empty) : (IsSuccess: false, null, "User has no investments");
             }
         }
@@ -59,12 +58,11 @@ public class InvestmentRepository : IInvestmentRepository
     {
         try
         {
-            string? connectionString = _configuration.GetConnectionString("mainServer");
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string sqlQuery = $"INSERT INTO Investment (portfolioId, name, clasification, description, platform, type, sector, risk, liquidity, currencyCode, createdOn, updatedOn) VALUES ({invest.portfolioId}, '{invest.name}','{invest.clasification}',  '{invest.description}', '{invest.platform}', '{invest.type}', '{invest.sector}', {invest.risk}, {invest.liquidity},'{invest.currencyCode}', NOW(), NOW())";
-                await connection.ExecuteAsync(sqlQuery);
+                string sqlQuery = $"INSERT INTO Investment (portfolioId, name, clasification, description, platform, type, sector, risk, liquidity, currencyCode, createdOn, updatedOn) VALUES (@portfolioId, @name, @clasification, @description, @platform, @type, @sector, @risk, @liquidity, @currencyCode, NOW(), NOW())";
+                await connection.ExecuteAsync(sqlQuery, new { portfolioId = invest.portfolioId, name = invest.name, clasification = invest.clasification, description = invest.description, platform = invest.platform, type = invest.type, sector = invest.sector, risk = invest.risk, liquidity = invest.liquidity, currencyCode = invest.currencyCode });
+
                 return (true, "Investment created successfully");
             }
         }
@@ -79,11 +77,10 @@ public class InvestmentRepository : IInvestmentRepository
     {
         try
         {
-            string? connectionString = _configuration.GetConnectionString("mainServer");
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 await connection.ExecuteAsync(sqlQuery);
+
                 return (true, "Investment modified successfully");
             }
         }
@@ -98,12 +95,11 @@ public class InvestmentRepository : IInvestmentRepository
     {
         try
         {
-            string? connectionString = _configuration.GetConnectionString("mainServer");
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string sqlQuery = $"DELETE FROM Investment WHERE id = {id} AND portfolioId = {portfolioId}";
-                await connection.ExecuteAsync(sqlQuery);
+                string sqlQuery = $"DELETE FROM Investment WHERE id = @id AND portfolioId = @portfolioId";
+                await connection.ExecuteAsync(sqlQuery, new { id = id, portfolioId = portfolioId });
+
                 return (true, "Investment deleted successfully");
             }
         }

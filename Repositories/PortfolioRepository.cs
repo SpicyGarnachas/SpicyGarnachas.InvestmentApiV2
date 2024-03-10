@@ -9,23 +9,23 @@ public class PortfolioRepository : IPortfolioRepository
 {
     private readonly ILogger<PortfolioRepository> logger;
     private readonly IConfiguration _configuration;
+    private readonly string connectionString;
 
     public PortfolioRepository(ILogger<PortfolioRepository> logger, IConfiguration configuration)
     {
         this.logger = logger;
-        _configuration = configuration;
+        connectionString = configuration.GetConnectionString("mainServer");
     }
-
+    //ExecuteAsync(sqlQuery, new {});
     public async Task<(bool IsSuccess, IEnumerable<PortfolioModel>?, string Message)> GetPortfolioData()
     {
         try
         {
-            string connectionString = _configuration.GetConnectionString("mainServer");
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 string sqlQuery = "SELECT * FROM Portfolio";
                 var portfolio = await connection.QueryAsync<PortfolioModel>(sqlQuery);
+
                 return portfolio.AsList().Count > 0 ? (IsSuccess: true, portfolio, string.Empty) : (IsSuccess: false, null, "Database without portfolios");
             }
         }
@@ -40,12 +40,11 @@ public class PortfolioRepository : IPortfolioRepository
     {
         try
         {
-            string? connectionString = _configuration.GetConnectionString("mainServer");
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string sqlQuery = $"SELECT * FROM Portfolio WHERE userId = {id}";
-                var portfolio = await connection.QueryAsync<PortfolioModel>(sqlQuery);
+                string sqlQuery = $"SELECT * FROM Portfolio WHERE userId = @id";
+                var portfolio = await connection.QueryAsync<PortfolioModel>(sqlQuery, new { id = id });
+
                 return portfolio.AsList().Count > 0 ? (IsSuccess: true, portfolio, string.Empty) : (IsSuccess: false, null, "User has no portfolios");
             }
         }
@@ -60,12 +59,10 @@ public class PortfolioRepository : IPortfolioRepository
     {
         try
         {
-            string? connectionString = _configuration.GetConnectionString("mainServer");
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string sqlQuery = $"INSERT INTO Portfolio (userId, name, description, currencyCode, createdOn, updatedOn) VALUES ({portfolio.userId},'{portfolio.name}', '{portfolio.description}', '{portfolio.currencyCode}',NOW(), NOW());";
-                await connection.ExecuteAsync(sqlQuery);
+                string sqlQuery = $"INSERT INTO Portfolio (userId, name, description, currencyCode, createdOn, updatedOn) VALUES (@userId,@name,@description,@currencyCode,NOW(),NOW());";
+                await connection.ExecuteAsync(sqlQuery, new {userId = portfolio.userId, name = portfolio.name, description = portfolio.description, currencyCode = portfolio.currencyCode });
 
                 return (IsSuccess: true, Message: "Portfolio created successfully");
             }
@@ -77,15 +74,14 @@ public class PortfolioRepository : IPortfolioRepository
         }
     }
 
-    public async Task<(bool IsSuccess, string Message)> ModifyPorfolio(int id, string sqlQuery)
+    public async Task<(bool IsSuccess, string Message)> ModifyPorfolio(PortfolioModel portfolio, string sqlQuery)
     {
         try
         {
-            string? connectionString = _configuration.GetConnectionString("mainServer");
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                await connection.ExecuteAsync(sqlQuery);
+                await connection.ExecuteAsync(sqlQuery, new { name = portfolio.name, description = portfolio.description, currencyCode = portfolio.currencyCode, portfolioId = portfolio.id, userId = portfolio.userId });
+
                 return (IsSuccess: true, Message: "Portfolio updated successfully");
             }
         }
@@ -100,12 +96,11 @@ public class PortfolioRepository : IPortfolioRepository
     {
         try
         {
-            string? connectionString = _configuration.GetConnectionString("mainServer");
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string sqlQuery = $"DELETE FROM Portfolio WHERE Id = {id} AND userId = {userId}";
-                await connection.ExecuteAsync(sqlQuery);
+                string sqlQuery = $"DELETE FROM Portfolio WHERE Id = @id AND userId = @userId";
+                await connection.ExecuteAsync(sqlQuery, new { id = id, userId = userId });
+
                 return (IsSuccess: true, Message: "Portfolio deleted successfully");
             }
         }

@@ -10,23 +10,23 @@ public class UserRepository : IUserRepository
 {
     private readonly ILogger<UserRepository> logger;
     private readonly IConfiguration _configuration;
+    private readonly string connectionString;
 
     public UserRepository(ILogger<UserRepository> logger, IConfiguration configuration)
     {
         this.logger = logger;
-        _configuration = configuration;
+        connectionString = configuration.GetConnectionString("mainServer");
     }
+
 
     public async Task<(bool IsSuccess, UserModel, string Message)> GetUserData(string username)
     {
         try
         {
-            string connectionString = _configuration.GetConnectionString("mainServer");
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string sqlQuery = $"SELECT * FROM Users WHERE username = '{username}'";
-                var user = await connection.QuerySingleOrDefaultAsync<UserModel>(sqlQuery);
+                string sqlQuery = $"SELECT * FROM Users WHERE username = @userName";
+                var user = await connection.QuerySingleOrDefaultAsync<UserModel>(sqlQuery, new { userName = username });
                 if (user == null)
                 {
                     return (false, null, "The user is not registered");
@@ -45,12 +45,10 @@ public class UserRepository : IUserRepository
     {
         try
         {
-            string? connectionString = _configuration.GetConnectionString("mainServer");
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string sqlQuery = $"INSERT INTO users (userName, password, salt, createdOn, updatedOn) VALUES ('{user.userName}', '{user.password}', '{user.salt}', NOW(), NOW())";
-                var users = await connection.QueryAsync<UserModel>(sqlQuery);
+                string sqlQuery = $"INSERT INTO users (userName, password, salt, createdOn, updatedOn) VALUES (@userName, @password, @salt, NOW(), NOW())";
+                var users = await connection.QueryAsync<UserModel>(sqlQuery, new { userName = user.userName, password = user.password, salt = user.salt });
                 return (IsSuccess: true, string.Empty);
             }
         }

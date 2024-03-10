@@ -9,18 +9,17 @@ public class TransactionRepository : ITransactionRepository
 {
     private readonly ILogger<TransactionRepository> logger;
     private readonly IConfiguration _configuration;
+    private readonly string connectionString;
 
     public TransactionRepository(ILogger<TransactionRepository> logger, IConfiguration configuration)
     {
         this.logger = logger;
-        _configuration = configuration;
+        connectionString = configuration.GetConnectionString("mainServer");
     }
     public async Task<(bool IsSuccess, IEnumerable<TransactionModel>?, string Message)> GetTransactionsData()
     {
         try
         {
-            string connectionString = _configuration.GetConnectionString("mainServer");
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 string sqlQuery = "SELECT * FROM Transaction";
@@ -38,12 +37,10 @@ public class TransactionRepository : ITransactionRepository
     {
         try
         {
-            string? connectionString = _configuration.GetConnectionString("mainServer");
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string sqlQuery = $"SELECT * FROM Transaction WHERE portfolioId = {id}";
-                var transactions = await connection.QueryAsync<TransactionModel>(sqlQuery);
+                string sqlQuery = $"SELECT * FROM Transaction WHERE portfolioId = @id";
+                var transactions = await connection.QueryAsync<TransactionModel>(sqlQuery, new { id = id});
                 return transactions.AsList().Count > 0 ? (IsSuccess: true, transactions, string.Empty) : (IsSuccess: false, null, "User has no Transactions in this portfolio");
             }
         }

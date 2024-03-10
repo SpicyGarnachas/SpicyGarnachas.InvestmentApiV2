@@ -19,6 +19,7 @@ public class PortfolioService : IPortfolioService
         try
         {
             var (IsSuccess, Result, Message) = await repository.GetPortfolioData();
+
             return IsSuccess ? (true, Result, string.Empty) : (false, null, Message);
         }
         catch (Exception ex)
@@ -32,6 +33,7 @@ public class PortfolioService : IPortfolioService
         try
         {
             var (IsSuccess, Result, Message) = await repository.GetPortfolioByUserId(id);
+
             return IsSuccess ? (true, Result, string.Empty) : (false, null, Message);
         }
         catch (Exception ex)
@@ -45,7 +47,8 @@ public class PortfolioService : IPortfolioService
     {
         try
         {
-            var (IsSuccess, Message) = await repository.CreateNewPortfolio(portfolio);
+            var (IsSuccess, Message) = await repository.CreateNewPortfolio(portfolio); 
+             
             return IsSuccess.Equals(true) ? (true, string.Empty) : (false, Message);
         }
         catch (Exception ex)
@@ -65,17 +68,17 @@ public class PortfolioService : IPortfolioService
 
             if (portfolio.name != null || portfolio.name != string.Empty)
             {
-                updateFields.Add($"name = '{portfolio.name}'");
+                updateFields.Add($"name = @name");
             }
 
             if (portfolio.description != null || portfolio.description != string.Empty)
             {
-                updateFields.Add($"description = '{portfolio.description}'");
+                updateFields.Add($"description = @description");
             }
 
             if (portfolio.currencyCode != null || portfolio.currencyCode != string.Empty)
             {
-                updateFields.Add($"currencyCode = '{portfolio.currencyCode}'");
+                updateFields.Add($"currencyCode = @currencyCode");
             }
 
             updateFields.Add($"updatedOn = NOW()");
@@ -93,9 +96,10 @@ public class PortfolioService : IPortfolioService
                 }
             }
 
-            sqlQuery += $" WHERE id = {portfolio.id} AND userId = {portfolio.userId}";
+            sqlQuery += $" WHERE id = @portfolioId AND userId = @userId";
 
-            var (IsSuccess, Message) = await repository.ModifyPorfolio(portfolio.id, sqlQuery);
+            var (IsSuccess, Message) = await repository.ModifyPorfolio(portfolio, sqlQuery);
+
             return IsSuccess.Equals(true) ? (true, string.Empty) : (false, Message);
         }
         catch (Exception ex)
@@ -110,6 +114,7 @@ public class PortfolioService : IPortfolioService
         try
         {
             var (IsSuccess, Message) = await repository.DeletePortfolio(id, userId);
+
             return IsSuccess.Equals(true) ? (true, string.Empty) : (false, Message);
         }
         catch (Exception ex)
