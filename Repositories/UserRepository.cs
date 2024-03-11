@@ -1,10 +1,10 @@
 ﻿using Dapper;
 using MySql.Data.MySqlClient;
-using SpicyGarnachas.FinanceApiV2.Models;
-using SpicyGarnachas.FinanceApiV2.Repositories.Interfaces;
+using SpicyGarnachas.InvestmentApiV2.Models;
+using SpicyGarnachas.InvestmentApiV2.Repositories.Interfaces;
 using System.Security.Cryptography;
 using System.Text;
-namespace SpicyGarnachas.FinanceApiV2;
+namespace SpicyGarnachas.InvestmentApiV2;
 
 public class UserRepository : IUserRepository
 {

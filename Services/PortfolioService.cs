@@ -1,8 +1,8 @@
-﻿using SpicyGarnachas.FinanceApiV2.Repositories.Interfaces;
-using SpicyGarnachas.FinanceApiV2.Services.Interfaces;
-using SpicyGarnachas.FinanceApiV2.Models;
+﻿using SpicyGarnachas.InvestmentApiV2.Repositories.Interfaces;
+using SpicyGarnachas.InvestmentApiV2.Services.Interfaces;
+using SpicyGarnachas.InvestmentApiV2.Models;
 
-namespace SpicyGarnachas.FinanceApiV2.Services;
+namespace SpicyGarnachas.InvestmentApiV2.Services;
 
 public class PortfolioService : IPortfolioService
 {
@@ -66,17 +66,17 @@ public class PortfolioService : IPortfolioService
             string sqlQuery = string.Empty;
             List<string> updateFields = new List<string>();
 
-            if (portfolio.name != null || portfolio.name != string.Empty)
+            if (portfolio.name != null)
             {
                 updateFields.Add($"name = @name");
             }
 
-            if (portfolio.description != null || portfolio.description != string.Empty)
+            if (portfolio.description != null)
             {
                 updateFields.Add($"description = @description");
             }
 
-            if (portfolio.currencyCode != null || portfolio.currencyCode != string.Empty)
+            if (portfolio.currencyCode != null)
             {
                 updateFields.Add($"currencyCode = @currencyCode");
             }

@@ -1,4 +1,4 @@
-namespace SpicyGarnachas.FinanceApiV2.Models;
+namespace SpicyGarnachas.InvestmentApiV2.Models;
 
 public class UserModel
 {

@@ -1,8 +1,8 @@
-﻿using SpicyGarnachas.FinanceApiV2.Models;
-using SpicyGarnachas.FinanceApiV2.Repositories.Interfaces;
-using SpicyGarnachas.FinanceApiV2.Services.Interfaces;
+﻿using SpicyGarnachas.InvestmentApiV2.Models;
+using SpicyGarnachas.InvestmentApiV2.Repositories.Interfaces;
+using SpicyGarnachas.InvestmentApiV2.Services.Interfaces;
 
-namespace SpicyGarnachas.FinanceApiV2.Services;
+namespace SpicyGarnachas.InvestmentApiV2.Services;
 
 public class FinanceService : IFinanceService
 {
