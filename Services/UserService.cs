@@ -1,8 +1,6 @@
-﻿using MySql.Data.MySqlClient;
-using SpicyGarnachas.InvestmentApiV2.Models;
+﻿using SpicyGarnachas.InvestmentApiV2.Models;
 using SpicyGarnachas.InvestmentApiV2.Repositories.Interfaces;
 using SpicyGarnachas.InvestmentApiV2.Services.Interfaces;
-using System.Security.Policy;
 
 namespace SpicyGarnachas.InvestmentApiV2;
 

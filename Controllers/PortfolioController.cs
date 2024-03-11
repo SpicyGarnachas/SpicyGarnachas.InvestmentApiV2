@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SpicyGarnachas.InvestmentApiV2.Services.Interfaces;
 using SpicyGarnachas.InvestmentApiV2.Models;
-using Microsoft.AspNetCore.Cors;
 
 namespace SpicyGarnachas.InvestmentApiV2.Controllers;
 

@@ -1,9 +1,7 @@
-using Microsoft.OpenApi.Models;
 using SpicyGarnachas.InvestmentApiV2.Repositories.Interfaces;
 using SpicyGarnachas.InvestmentApiV2.Repositories;
 using SpicyGarnachas.InvestmentApiV2.Services.Interfaces;
 using SpicyGarnachas.InvestmentApiV2.Services;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace SpicyGarnachas.InvestmentApiV2;
 

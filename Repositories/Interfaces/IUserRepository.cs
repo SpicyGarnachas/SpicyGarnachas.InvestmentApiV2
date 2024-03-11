@@ -1,7 +1,6 @@
 ﻿using SpicyGarnachas.InvestmentApiV2.Models;
 namespace SpicyGarnachas.InvestmentApiV2.Repositories.Interfaces;
 
-
 public interface IUserRepository
 {
     Task<(bool IsSuccess, UserModel, string Message)> GetUserData(string username);
