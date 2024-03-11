@@ -29,11 +29,11 @@ public class FinanceService : IFinanceService
         }
     }
 
-    public async Task<(bool IsSuccess, IEnumerable<FinanceModel>?, string Message)> GetFinanceDataByUserId(int id)
+    public async Task<(bool IsSuccess, IEnumerable<FinanceModel>?, string Message)> GetFinanceDataByPortfolioId(int id)
     {
         try
         {
-            var (IsSuccess, Result, Message) = await repository.GetFinanceDataByUserId(id);
+            var (IsSuccess, Result, Message) = await repository.GetFinanceDataByPortfolioId(id);
             return IsSuccess ? (true, Result, string.Empty) : (false, null, Message);
         }
         catch (Exception ex)
@@ -108,7 +108,7 @@ public class FinanceService : IFinanceService
             {
                 if (isFirst)
                 {
-                    sqlQuery += $"UPDATE investment SET {field}";
+                    sqlQuery += $"UPDATE Finance SET {field}";
                     isFirst = false;
                 }
                 else

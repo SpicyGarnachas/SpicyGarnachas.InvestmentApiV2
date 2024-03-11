@@ -81,6 +81,12 @@ public class PortfolioService : IPortfolioService
                 updateFields.Add($"currencyCode = @currencyCode");
             }
 
+            if (portfolio.expenseLimit != null)
+            {
+                updateFields.Add($"expenseLimit = @expenseLimit");
+            }
+
+
             updateFields.Add($"updatedOn = NOW()");
 
             foreach (string field in updateFields)

@@ -61,8 +61,8 @@ public class PortfolioRepository : IPortfolioRepository
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string sqlQuery = $"INSERT INTO Portfolio (userId, name, description, currencyCode, createdOn, updatedOn) VALUES (@userId,@name,@description,@currencyCode,NOW(),NOW());";
-                await connection.ExecuteAsync(sqlQuery, new {userId = portfolio.userId, name = portfolio.name, description = portfolio.description, currencyCode = portfolio.currencyCode });
+                string sqlQuery = $"INSERT INTO Portfolio (userId, name, description, currencyCode, createdOn, updatedOn) VALUES (@userId,@name,@description,@currencyCode,@expenseLimit ,NOW(),NOW());";
+                await connection.ExecuteAsync(sqlQuery, new {userId = portfolio.userId, name = portfolio.name, description = portfolio.description, currencyCode = portfolio.currencyCode, expenseLimit  = portfolio.expenseLimit  });
 
                 return (IsSuccess: true, Message: "Portfolio created successfully");
             }
@@ -80,7 +80,7 @@ public class PortfolioRepository : IPortfolioRepository
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                await connection.ExecuteAsync(sqlQuery, new { name = portfolio.name, description = portfolio.description, currencyCode = portfolio.currencyCode, portfolioId = portfolio.id, userId = portfolio.userId });
+                await connection.ExecuteAsync(sqlQuery, new { name = portfolio.name, description = portfolio.description, currencyCode = portfolio.currencyCode, portfolioId = portfolio.id, userId = portfolio.userId, expenseLimit = portfolio.expenseLimit });
 
                 return (IsSuccess: true, Message: "Portfolio updated successfully");
             }

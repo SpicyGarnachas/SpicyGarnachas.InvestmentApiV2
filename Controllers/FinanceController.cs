@@ -26,10 +26,10 @@ public class FinanceController : ControllerBase
     }
     
     [HttpGet]
-    [Route("GetFinanceDataByUserId")]
-    public async Task<ActionResult<IEnumerable<FinanceModel>?>> GetFinanceDataByUserId(int id)
+    [Route("GetFinanceDataByPortfolioId")]
+    public async Task<ActionResult<IEnumerable<FinanceModel>?>> GetFinanceDataByPortfolioId(int id)
     {
-        var (IsSuccess, Result, Message) = await services.GetFinanceDataByUserId(id);
+        var (IsSuccess, Result, Message) = await services.GetFinanceDataByPortfolioId(id);
         return IsSuccess ? Ok(Result) : BadRequest(Message);
     }
 

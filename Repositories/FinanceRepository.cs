@@ -35,7 +35,7 @@ public class FinanceRepository : IFinanceRepository
             return (false, null, ex.Message);
         }
     }
-    public async Task<(bool IsSuccess, IEnumerable<FinanceModel>?, string Message)> GetFinanceDataByUserId(int id)
+    public async Task<(bool IsSuccess, IEnumerable<FinanceModel>?, string Message)> GetFinanceDataByPortfolioId(int id)
     {
         try 
         { 
