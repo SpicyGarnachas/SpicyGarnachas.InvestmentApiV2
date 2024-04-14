@@ -1,12 +1,9 @@
 namespace SpicyGarnachas.InvestmentApiV2.Models;
 
-public class UserModel
-{
-    public int id { get; set; }
-    public string? userName { get; set; }
-    public string? password { get; set; }
-    public string? salt { get; set; }
-    public byte[]? image { get; set; }
-    public DateTime? createdOn { get; set; }
-    public DateTime? updatedOn { get; set; }
-}
+public record UserModel(int id,
+                        string? userName,
+                        string? password,
+                        string? salt,
+                        byte[]? image,
+                        DateTime? createdOn,
+                        DateTime? updatedOn);
